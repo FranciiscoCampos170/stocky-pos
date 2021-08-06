@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Http\Livewire;
+
+use Illuminate\Support\Facades\Log;
+use Livewire\Component;
+use Spatie\Permission\Models\Role;
+
+class Roles extends Component
+{
+    public $name;
+    protected  $rules = [
+        'name' => 'required|unique:roles'
+    ];
+    public function submitRole()
+    {
+        try {
+            $this->validate();
+            $role = new Role();
+            $role->name = $this->name;
+            $role->save();
+        }catch (\Exception $e){
+            Log::error($e);
+            dd($e);
+        }
+    }
+    public function render()
+    {
+        return view('livewire.roles');
+    }
+}
