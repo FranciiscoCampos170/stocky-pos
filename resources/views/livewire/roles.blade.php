@@ -1,10 +1,11 @@
 <div>
+
     <div id="crud-table-body" class="w-full rounded-lg bg-white shadow mb-8">
         <div id="crud-table-header" class="p-2 border-b border-gray-200 flex flex-col md:flex-row justify-between flex-wrap">
             <div id="crud-search-box" class="w-full md:w-auto -mx-2 mb-2 md:mb-0 flex"><div class="px-2 flex items-center justify-center">
-                    <a href="http://v4.nexopos.com/dashboard/users/roles/create" class="rounded-full hover:border-blue-400 hover:text-white hover:bg-blue-400 text-sm h-10 flex items-center justify-center cursor-pointer bg-white px-3 outline-none text-gray-800 border border-gray-400">
+                    <button class="rounded-full hover:border-blue-400 hover:text-white hover:bg-blue-400 text-sm h-10 flex items-center justify-center cursor-pointer bg-white px-3 outline-none text-gray-800 border border-gray-400" @click="showModal = true">
                         <i class="las la-plus"></i>
-                    </a>
+                    </button>
                 </div>
                 <div class="px-2"><div class="rounded-full p-1 bg-gray-200 flex">
                         <input type="text" class="w-36 md:w-auto bg-transparent outline-none px-2">
@@ -74,11 +75,7 @@
                     <tr class="border-gray-200 border text-sm">
                         <td class="text-gray-700 font-sans border-gray-200 p-2">
                             <div class="flex items-center justify-center cursor-pointer">
-                                <div class="w-6 h-6 flex bg-white border-2 items-center justify-center cursor-pointer">
-                                    <!---->
-                                </div>
-                                <!---->
-                                <!---->
+                                <input type="checkbox" class="w-6 h-6 flex bg-white border-2 items-center justify-center cursor-pointer">
                             </div>
                         </td>
                         <td class="text-gray-700 font-sans border-gray-200 p-2">
@@ -127,4 +124,5 @@
             </div>
         </div>
     </div>
+@include('roles.create')
 </div>

@@ -24,3 +24,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/roles', function(){
     return view('roles.index');
 })->name('roles.index');
+
+Route::post('/roles-store',function (\Illuminate\Http\Request $request){
+    return $request;
+})->name('roles.store');
