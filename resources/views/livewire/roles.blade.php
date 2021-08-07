@@ -44,34 +44,28 @@
                         </th>
                         <th class="cursor-pointer justify-betweenw-40 border bg-gray-100 text-left px-2 border-gray-200 py-2" style="min-width: auto;">
                             <div class="w-full flex justify-between items-center">
-                                <span class="flex">Nome</span>
+                                <span class="flex">@lang('roles.role_name')</span>
                                 <span class="h-6 w-6 flex justify-center items-center">
                                     <!----> <!---->
                                 </span>
                             </div>
                         </th>
+
                         <th class="cursor-pointer justify-betweenw-40 border bg-gray-100 text-left px-2 border-gray-200 py-2" style="min-width: auto;">
                             <div class="w-full flex justify-between items-center">
-                                <span class="flex">Namespace</span>
-                                <span class="h-6 w-6 flex justify-center items-center">
-                                    <!----> <!---->
-                                </span>
-                            </div>
-                        </th>
-                        <th class="cursor-pointer justify-betweenw-40 border bg-gray-100 text-left px-2 border-gray-200 py-2" style="min-width: auto;">
-                            <div class="w-full flex justify-between items-center">
-                                <span class="flex">Criado a</span>
+                                <span class="flex">@lang('common.created_at')</span>
                                 <span class="h-6 w-6 flex justify-center items-center">
                                     <!----> <!---->
                                 </span>
                             </div>
                         </th>
                         <th colspan="2" class="text-center px-2 py-2 w-16 border border-gray-200 bg-gray-100">
-                            Opções
+                            @lang('common.options')
                         </th>
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach($roles as $role)
                     <tr class="border-gray-200 border text-sm">
                         <td class="text-gray-700 font-sans border-gray-200 p-2">
                             <div class="flex items-center justify-center cursor-pointer">
@@ -79,11 +73,9 @@
                             </div>
                         </td>
                         <td class="text-gray-700 font-sans border-gray-200 p-2">
-                            User
+                            {{ $role->name }}
                         </td>
-                        <td class="text-gray-700 font-sans border-gray-200 p-2">
-                            user
-                        </td>
+
                         <td class="text-gray-700 font-sans border-gray-200 p-2">
                             2021-07-30 01:00:04
                         </td>
@@ -96,6 +88,7 @@
                             </button>
                         </td>
                         </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>

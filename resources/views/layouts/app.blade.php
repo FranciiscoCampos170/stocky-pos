@@ -9,6 +9,8 @@
     @livewireStyles
     <!-- Tailwind -->
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css?family=Karla:400,700&display=swap');
         .font-family-karla { font-family: karla; }
@@ -117,4 +119,18 @@
 
 @livewireScripts
 </body>
+<script>
+    window.addEventListener('swal:modal', event => {
+        swal({
+
+            title: event.detail.message,
+
+            text: event.detail.text,
+
+            icon: event.detail.type,
+
+        });
+    });
+
+</script>
 </html>
