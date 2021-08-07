@@ -16,9 +16,14 @@
                     </div>
                 </div>
                 <div class="px-2 flex">
-                    <button class="rounded-full hover:border-blue-400 hover:text-white hover:bg-blue-400 text-sm h-10 bg-white px-3 outline-none text-gray-800 border border-gray-400">
+                    <button class="rounded-full hover:border-blue-400 hover:text-white hover:bg-blue-400 text-sm h-10 bg-white px-3 outline-none text-gray-800 border border-gray-400"
+                            wire:click="refreshTable">
+                        {{-- <div wire:loading wire:target="refreshTable">
+                            <i class="las la-sync"></i>
+                        </div>--}}
                         <i class="las la-sync"></i>
                     </button>
+
                 </div>
             </div>
             <div id="crud-buttons" class="-mx-1 flex flex-wrap w-full md:w-auto">
@@ -90,9 +95,17 @@
                             <button class="rounded-full hover:border-yellow-800 hover:text-white hover:bg-yellow-500 text-sm h-10 bg-white px-3 outline-none text-gray-800 border border-gray-400">
                                 <i class="las la-edit"></i>
                             </button>
-                            <button class="rounded-full hover:border-red-800 hover:text-white hover:bg-red-400 text-sm h-10 bg-white px-3 outline-none text-gray-800 border border-gray-400">
-                                <i class="las la-trash"></i>
-                            </button>
+                            @if($confirming === $role->id)
+                                <button class="rounded-full hover:border-red-800 hover:text-white hover:bg-red-400 text-sm h-10 bg-white px-3 outline-none text-gray-800 border border-gray-400"
+                                        wire:click="deleteSingleRole({{$role->id}})">
+                                    @lang('common.are_you_sure')
+                                </button>
+                            @else
+                                <button class="rounded-full hover:border-red-800 hover:text-white hover:bg-red-400 text-sm h-10 bg-white px-3 outline-none text-gray-800 border border-gray-400"
+                                        wire:click="confirmSingRoleDelete({{$role->id}})">
+                                    <i class="las la-trash"></i>
+                                </button>
+                            @endif
                         </td>
                         </tr>
                     @endforeach
@@ -102,12 +115,12 @@
         </div>
         <div class="p-2 flex flex-col md:flex-row justify-between">
             <div id="grouped-actions" class="mb-2 md:mb-0 flex justify-between rounded-full bg-gray-200 p-1">
-                <select id="grouped-actions" class="text-gray-800 outline-none bg-transparent">
-                    <option selected="selected" value="">Bulk Actions</option>
-                    <option value="delete_selected">Delete Selected Groups</option>
+                <select name="action" id="grouped-actions" class="text-gray-800 outline-none bg-transparent" wire:model="action">
+                    <option selected="selected" value="0">@lang('common.select_action')</option>
+                    <option value="1">@lang('common.delete_selected_itens')</option>
                 </select>
                 <button class="h-8 w-8 outline-none hover:bg-blue-400 hover:text-white rounded-full bg-white flex items-center justify-center"
-                        wire:click="deleteSelected">
+                        wire:click="confirmDeleteModal">
                     Go
                 </button>
             </div>

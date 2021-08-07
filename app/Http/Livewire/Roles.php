@@ -8,9 +8,11 @@ use Spatie\Permission\Models\Role;
 
 class Roles extends Component
 {
-    public $name;
+    public $name, $action;
     public $selectedRoles = [];
-    protected $listeners = ['updateTable' => 'render'];
+    protected $listeners = ['updateTable' => 'render',
+                            'deleteItens' => 'deleteSelected'];
+    public $confirming;
     protected  $rules = [
         'name' => 'required|unique:roles'
     ];
@@ -37,9 +39,40 @@ class Roles extends Component
         }
     }
 
+    public function confirmSingRoleDelete($id): void
+    {
+        $this->confirming = $id;
+    }
+
+    public function deleteSingleRole($id): void
+    {
+        Role::where('id', $id)->delete();
+        $this->emit('updateTable');
+    }
+
+    public function confirmDeleteModal(): void
+    {
+        if ($this->action === "1" && count($this->selectedRoles) > 0)
+        {
+            $this->dispatchBrowserEvent('swal:confirm', [
+                'type' => 'warning',
+                'message' => 'Você tem a certeza?',
+                'text' => 'Se apagar, essa ação não é reversível'
+            ]);
+        }
+    }
     public function deleteSelected()
     {
-        dd($this->selectedRoles);
+        Role::query()
+            ->whereIn('id', $this->selectedRoles)
+            ->delete();
+        $this->selectedRoles = [];
+        $this->emit('updateTable');
+    }
+
+    public function refreshTable()
+    {
+        $this->emit('updateTable');
     }
     public function render()
     {
