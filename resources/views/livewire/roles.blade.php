@@ -22,7 +22,13 @@
                 </div>
             </div>
             <div id="crud-buttons" class="-mx-1 flex flex-wrap w-full md:w-auto">
-                <!---->
+                @if(count($selectedRoles) > 0)
+                    <div class="px-1 flex">
+                        <button class="flex justify-center items-center rounded-full text-sm h-10 px-3 hover:border-blue-400 hover:text-white hover:bg-blue-400 outline-none border-gray-400 border text-gray-700">
+                            <i class="lar la-check-square"></i> {{ count($selectedRoles) }} entries selected
+                        </button>
+                    </div>
+                @endif
                 <div class="px-1 flex">
                     <button class="flex justify-center bg-blue-400 items-center rounded-full text-sm h-10 px-3 bg-teal-400 outline-none text-white font-semibold">
                         <i class="las la-download"></i> Download
@@ -69,7 +75,8 @@
                     <tr class="border-gray-200 border text-sm">
                         <td class="text-gray-700 font-sans border-gray-200 p-2">
                             <div class="flex items-center justify-center cursor-pointer">
-                                <input type="checkbox" class="w-6 h-6 flex bg-white border-2 items-center justify-center cursor-pointer">
+                                <input type="checkbox" class="w-6 h-6 flex bg-white border-2 items-center justify-center cursor-pointer"
+                                        value="{{$role->id}}" wire:model="selectedRoles">
                             </div>
                         </td>
                         <td class="text-gray-700 font-sans border-gray-200 p-2">
@@ -77,7 +84,7 @@
                         </td>
 
                         <td class="text-gray-700 font-sans border-gray-200 p-2">
-                            2021-07-30 01:00:04
+                            {{$role->created_at}}
                         </td>
                         <td colspan="2" class="text-center">
                             <button class="rounded-full hover:border-yellow-800 hover:text-white hover:bg-yellow-500 text-sm h-10 bg-white px-3 outline-none text-gray-800 border border-gray-400">
@@ -99,7 +106,8 @@
                     <option selected="selected" value="">Bulk Actions</option>
                     <option value="delete_selected">Delete Selected Groups</option>
                 </select>
-                <button class="h-8 w-8 outline-none hover:bg-blue-400 hover:text-white rounded-full bg-white flex items-center justify-center">
+                <button class="h-8 w-8 outline-none hover:bg-blue-400 hover:text-white rounded-full bg-white flex items-center justify-center"
+                        wire:click="deleteSelected">
                     Go
                 </button>
             </div>

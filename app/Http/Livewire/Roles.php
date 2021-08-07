@@ -9,10 +9,15 @@ use Spatie\Permission\Models\Role;
 class Roles extends Component
 {
     public $name;
+    public $selectedRoles = [];
     protected $listeners = ['updateTable' => 'render'];
     protected  $rules = [
         'name' => 'required|unique:roles'
     ];
+    public function mount()
+    {
+        $this->selectedRoles = collect();
+    }
     public function submitRole()
     {
         try {
@@ -30,6 +35,11 @@ class Roles extends Component
             Log::error($e);
             dd($e);
         }
+    }
+
+    public function deleteSelected()
+    {
+        dd($this->selectedRoles);
     }
     public function render()
     {
