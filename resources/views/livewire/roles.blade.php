@@ -8,7 +8,8 @@
                     </button>
                 </div>
                 <div class="px-2"><div class="rounded-full p-1 bg-gray-200 flex">
-                        <input type="text" class="w-36 md:w-auto bg-transparent outline-none px-2">
+                        <input type="text" class="w-36 md:w-auto bg-transparent outline-none px-2"
+                            placeholder="Search..." wire:model="search">
                         <button class="rounded-full w-8 h-8 bg-white outline-none hover:bg-blue-400 hover:text-white">
                             <i class="las la-search"></i>
                         </button>
@@ -92,7 +93,7 @@
                             {{$role->created_at}}
                         </td>
                         <td colspan="2" class="text-center">
-                            <button class="rounded-full hover:border-yellow-800 hover:text-white hover:bg-yellow-500 text-sm h-10 bg-white px-3 outline-none text-gray-800 border border-gray-400">
+                            <button class="rounded-full hover:border-yellow-800 hover:text-white hover:bg-yellow-500 text-sm h-10 bg-white px-3 outline-none text-gray-800 border border-gray-400" @click="editRoleModal = true" wire:click="edit({{$role->id}})">
                                 <i class="las la-edit"></i>
                             </button>
                             @if($confirming === $role->id)
@@ -125,18 +126,13 @@
                 </button>
             </div>
             <div class="flex">
-                <div class="items-center flex text-gray-600 mx-4">displaying 4 on 4 items</div>
+                <div class="items-center flex text-gray-600 mx-4"></div>
                 <div id="pagination" class="flex -mx-1">
-                    <a href="javascript:void(0)" class="mx-1 flex items-center justify-center h-8 w-8 rounded-full bg-gray-200 text-gray-700 hover:bg-blue-400 hover:text-white shadow">
-                        <i class="las la-angle-double-left"></i>
-                    </a>
-                    <a href="javascript:void(0)" class="mx-1 flex items-center justify-center h-8 w-8 rounded-full hover:bg-blue-400 hover:text-white bg-blue-400 text-white">1</a>
-                    <a href="javascript:void(0)" class="mx-1 flex items-center justify-center h-8 w-8 rounded-full bg-gray-200 text-gray-700 hover:bg-blue-400 hover:text-white shadow">
-                        <i class="las la-angle-double-right"></i>
-                    </a>
+                    {{ $roles->links() }}
                 </div>
             </div>
         </div>
     </div>
 @include('roles.create')
+@include('roles.edit')
 </div>

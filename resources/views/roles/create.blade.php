@@ -28,7 +28,7 @@
                         <div class="flex border-2 rounded overflow-hidden border-blue-500">
                                 <input name="ind" type="text" class="flex-auto text-gray-700 outline-none h-10 px-2" wire:model="name">
                                 <button type="submit" class="outline-none px-4 h-10 text-white border-l border-gray-400 bg-blue-500">
-                                    @lang('roles.save')
+                                    @lang('common.save')
                                 </button>
                         </div>
                     </form>
