@@ -116,7 +116,15 @@
                                 {{ $user->name }}
                             </td>
                             <td class="text-gray-700 font-sans border-gray-200 p-2">
-                                {{ $user->active = 1 ? "Yes" : "No" }}
+                                @if($user->active === 1)
+                                <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-green-100 bg-green-600 rounded-full">
+                                    @lang('common.yes')
+                                </span>
+                                @else
+                                    <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+                                        @lang('common.no')
+                                    </span>
+                                @endif
                             </td>
                             <td class="text-gray-700 font-sans border-gray-200 p-2">
                                 {{ $user->email }}
@@ -132,7 +140,7 @@
                                 <button class="rounded-full hover:border-yellow-800 hover:text-white hover:bg-yellow-500 text-sm h-10 bg-white px-3 outline-none text-gray-800 border border-gray-400" @click="editRoleModal = true" wire:click="edit({{$user->id}})">
                                     <i class="las la-edit"></i>
                                 </button>
-                                @if(1 === $user->id)
+                                @if($confirming === $user->id)
                                     <button class="rounded-full hover:border-red-800 hover:text-white hover:bg-red-400 text-sm h-10 bg-white px-3 outline-none text-gray-800 border border-gray-400"
                                             wire:click="deleteSingleRole({{$user->id}})">
                                         @lang('common.are_you_sure')
@@ -164,7 +172,7 @@
             <div class="flex">
                 <div class="items-center flex text-gray-600 mx-4"></div>
                 <div id="pagination" class="flex -mx-1">
-
+                    {{ $users->links() }}
                 </div>
             </div>
         </div>

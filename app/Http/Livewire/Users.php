@@ -3,21 +3,31 @@
 namespace App\Http\Livewire;
 
 use App\Actions\Fortify\PasswordValidationRules;
+use App\Exports\RolesExport;
+use App\Exports\UsersExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Spatie\Permission\Models\Role;
 
 class Users extends Component
 {
     use PasswordValidationRules;
+    use WithPagination;
     public $name, $email, $password, $role_id, $active, $password_confirmation;
+
     public $selectedRoles = [];
-    public $action;
+
+    public $action,$search,$confirming;
+
     protected $listeners = ['updateTable' => 'render',
         'deleteItens' => 'deleteSelected'];
+
+    protected $queryString = ['search'];
+
     protected  $rules = [
         'name' => 'required|string|min:3|max:255',
         'email' => 'required|string|email|max:255|unique:users',
@@ -59,7 +69,10 @@ class Users extends Component
     }
     public function render()
     {
-        return view('livewire.users', ['users' => \App\Models\User::get(), 'roles' => Role::all()]);
+        return view('livewire.users', ['users' => \App\Models\User::where(function($query){
+            $query->where('name', 'like', '%'.$this->search.'%')
+                    ->orWhere('email', 'like', '%'.$this->search.'%');
+        })->paginate(10), 'roles' => Role::all()]);
     }
 
     public function clearFields(): void
@@ -84,11 +97,30 @@ class Users extends Component
     }
     public function deleteSelected()
     {
-        dd("hre");
+
         \App\Models\User::query()
             ->whereIn('id', $this->selectedRoles)
             ->delete();
         $this->selectedRoles = [];
+        $this->emit('updateTable');
+    }
+
+    public function export()
+    {
+        return \Maatwebsite\Excel\Facades\Excel::download(new UsersExport, 'users.xlsx');
+    }
+    public function refreshTable()
+    {
+        $this->emit('updateTable');
+    }
+    public function confirmSingRoleDelete($id): void
+    {
+        $this->confirming = $id;
+    }
+
+    public function deleteSingleRole($id): void
+    {
+        \App\Models\User::where('id', $id)->delete();
         $this->emit('updateTable');
     }
 }
