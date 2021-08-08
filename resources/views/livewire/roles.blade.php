@@ -36,7 +36,8 @@
                     </div>
                 @endif
                 <div class="px-1 flex">
-                    <button class="flex justify-center bg-blue-400 items-center rounded-full text-sm h-10 px-3 bg-teal-400 outline-none text-white font-semibold">
+                    <button class="flex justify-center bg-blue-400 items-center rounded-full text-sm h-10 px-3 bg-teal-400 outline-none text-white font-semibold"
+                    wire:click="export">
                         <i class="las la-download"></i> Download
                     </button>
                 </div>

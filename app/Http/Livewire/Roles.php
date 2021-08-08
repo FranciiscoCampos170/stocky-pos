@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire;
 
+use App\Exports\RolesExport;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
+use Maatwebsite\Excel\Excel;
 use Spatie\Permission\Models\Role;
 use Livewire\WithPagination;
 class Roles extends Component
@@ -103,6 +105,10 @@ class Roles extends Component
             Log::error($e);
             dd($e);
         }
+    }
+    public function export()
+    {
+        return \Maatwebsite\Excel\Facades\Excel::download(new RolesExport, 'roles.xlsx');
     }
     public function render()
     {
