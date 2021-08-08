@@ -5,13 +5,15 @@ namespace App\Http\Livewire;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Spatie\Permission\Models\Role;
-
+use Livewire\WithPagination;
 class Roles extends Component
 {
-    public $name, $action;
+    use WithPagination;
+    public $name, $action, $search, $role, $roleId;
     public $selectedRoles = [];
     protected $listeners = ['updateTable' => 'render',
                             'deleteItens' => 'deleteSelected'];
+    protected $queryString = ['search'];
     public $confirming;
     protected  $rules = [
         'name' => 'required|unique:roles'
@@ -31,6 +33,7 @@ class Roles extends Component
                 'type' => 'success',
                 'message' => 'Cargo adicionado com sucesso!'
             ]);
+            $this->name = "";
             $this->emit('updateTable');
 
         }catch (\Exception $e){
@@ -74,8 +77,37 @@ class Roles extends Component
     {
         $this->emit('updateTable');
     }
+
+    public function edit($id): void
+    {
+        $role = Role::where('id', $id)->first();
+        $this->role = $role->name;
+        $this->roleId = $role->id;
+    }
+
+    public function update($id): void
+    {
+        try {
+
+            $role = Role::where('id', $id)->first();
+            $role->name = $this->role;
+            $role->save();
+            $this->dispatchBrowserEvent('swal:modal', [
+                'type' => 'success',
+                'message' => 'Cargo editado com sucesso!'
+            ]);
+            $this->role = "";
+            $this->emit('updateTable');
+
+        }catch (\Exception $e){
+            Log::error($e);
+            dd($e);
+        }
+    }
     public function render()
     {
-        return view('livewire.roles', ['roles' => Role::all()]);
+        return view('livewire.roles', ['roles' => Role::where(function($query){
+            $query->where('name', 'like', '%'.$this->search.'%');
+        })->paginate(10)]);
     }
 }

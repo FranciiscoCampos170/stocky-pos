@@ -5,5 +5,6 @@ return [
     'options' => 'Options',
     'delete_selected_itens' => 'Delete Selected Itens',
     'select_action' => 'Select an action',
-    'are_you_sure' => 'Are you sure?'
+    'are_you_sure' => 'Are you sure?',
+    'save' => "Save",
 ];
