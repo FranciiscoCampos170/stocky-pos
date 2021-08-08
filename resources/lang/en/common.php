@@ -7,4 +7,7 @@ return [
     'select_action' => 'Select an action',
     'are_you_sure' => 'Are you sure?',
     'save' => "Save",
+    'active' => "Active",
+    'email' => "Email",
+    'role' => "Role"
 ];

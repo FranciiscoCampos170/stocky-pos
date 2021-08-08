@@ -28,3 +28,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/roles', function(){
 Route::post('/roles-store',function (\Illuminate\Http\Request $request){
     return $request;
 })->name('roles.store');
+
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/users-list', function (){
+    return view('users.index');
+})->name('users.index');
