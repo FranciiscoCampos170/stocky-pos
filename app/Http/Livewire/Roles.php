@@ -30,6 +30,7 @@ class Roles extends Component
             $this->validate();
             $role = new Role();
             $role->name = $this->name;
+            $role->guard_name = "web";
             $role->save();
             $this->dispatchBrowserEvent('swal:modal', [
                 'type' => 'success',
