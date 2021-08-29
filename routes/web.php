@@ -25,6 +25,10 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/roles', function(){
     return view('roles.index');
 })->name('roles.index');
 
+Route::middleware(['auth:sanctum', 'verified'])->get('/manage-permissions', function(){
+    return view('roles.manage-permissions');
+})->name('roles.manage-permissions');
+
 Route::post('/roles-store',function (\Illuminate\Http\Request $request){
     return $request;
 })->name('roles.store');
@@ -33,3 +37,9 @@ Route::post('/roles-store',function (\Illuminate\Http\Request $request){
 Route::middleware(['auth:sanctum', 'verified'])->get('/users-list', function (){
     return view('users.index');
 })->name('users.index');
+
+Route::get('/store-permission', function ()
+{
+    /*$permission = \Spatie\Permission\Models\Permission::create(
+        ['name' => 'Create Users']);*/
+});
