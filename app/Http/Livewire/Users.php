@@ -20,6 +20,7 @@ class Users extends Component
     public $name, $email, $password, $role_id, $active, $password_confirmation;
 
     public $selectedRoles = [];
+    public $roles_id;
 
     public $action,$search,$confirming;
 
@@ -33,13 +34,17 @@ class Users extends Component
         'email' => 'required|string|email|max:255|unique:users',
         'password' => 'required|confirmed',
         'active' => 'required',
-        'role_id' => 'required',
+        //'role_id' => 'required',
         'password_confirmation' => 'required'
     ];
 
     public function mount()
     {
         $this->selectedRoles = collect();
+    }
+    public function chad()
+    {
+        dd($this->roles_id);
     }
     public function createUser()
     {
@@ -54,9 +59,13 @@ class Users extends Component
                 'password' => Hash::make($this->password),
                 'active' => $this->active
             ]);
-            $role = Role::where('id', $this->role_id)->first();
-                $user->assignRole($role->name);
+                foreach ($this->roles_id as $role_id)
+                {
+                    $role = Role::where('id', $role_id)->first();
+                    $user->assignRole($role->name);
+                }
             });
+
             $this->dispatchBrowserEvent('swal:modal', [
                 'type' => 'success',
                 'message' => 'Utilizador adicionado com sucesso!'
@@ -97,7 +106,6 @@ class Users extends Component
     }
     public function deleteSelected()
     {
-
         \App\Models\User::query()
             ->whereIn('id', $this->selectedRoles)
             ->delete();

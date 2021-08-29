@@ -83,7 +83,7 @@
                         </th>
                         <th class="cursor-pointer justify-betweenw-40 border bg-gray-100 text-left px-2 border-gray-200 py-2" style="min-width: auto;">
                             <div class="w-full flex justify-between items-center">
-                                <span class="flex">@lang('common.role')</span>
+                                <span class="flex">@lang('common.role')(s)</span>
                                 <span class="h-6 w-6 flex justify-center items-center">
                                     <!----> <!---->
                                 </span>
@@ -130,7 +130,7 @@
                                 {{ $user->email }}
                             </td>
                             <td class="text-gray-700 font-sans border-gray-200 p-2">
-                                {{ $user->roles->pluck('name')->first() }}
+                                {{ $user->roles->pluck('name')->implode(', ') }}
                             </td>
 
                             <td class="text-gray-700 font-sans border-gray-200 p-2">
