@@ -9,5 +9,7 @@ return [
     'save' => "Save",
     'active' => "Active",
     'email' => "Email",
-    'role' => "Role"
+    'role' => "Role",
+    'yes' => "Yes",
+    'no'=> "No"
 ];

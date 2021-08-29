@@ -20,7 +20,6 @@
         </div>
         <div class="flex flex-col px-6 py-5 bg-gray-50">
             <div class="flex flex-col">
-
                 <form wire:submit.prevent="createUser" method="POST" action="{{ route('roles.store') }}">
                     @csrf
                         <div class="flex justify-between items-center">
@@ -112,13 +111,16 @@
                                     <div class="flex flex-col flex-auto">
                                         <label for="role_id" class="block leading-5 font-medium font-bold text-gray-700">Role</label>
                                         <div class="border-2 mt-1 relative rounded-md shadow-sm mb-2 border-gray-200">
-                                            <select name="role_id" class="text-gray-700 form-input block w-full pl-7 pr-12 sm:text-sm sm:leading-5 h-10 bg-transparent px-4" wire:model="role_id">
+                                            <select name="roles_id[]" multiple class="text-gray-700 form-input block w-full pl-7 pr-12 sm:text-sm sm:leading-5 h-10 bg-transparent px-4" wire:model="roles_id">
                                                 <option class="py-2" value="">---</option>
                                                 @foreach($roles as $role)
                                                     <option class="py-2" value="{{$role->id}}">{{$role->name}}</option>
                                                 @endforeach
                                             </select>
+
                                         </div>
+                                        {{-- @include('users.multi-select-roles')  --}}
+                                        <button wire:click="chad">click!</button>
                                         @error('role_id')
                                         <p class="text-xs text-red-600">
                                             <span>{{$message}}</span>
