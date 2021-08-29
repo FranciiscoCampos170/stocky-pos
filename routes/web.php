@@ -41,5 +41,5 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/users-list', function (){
 Route::get('/store-permission', function ()
 {
     /*$permission = \Spatie\Permission\Models\Permission::create(
-        ['name' => 'Create Users']);*/
+        ['name' => 'Read Users']);*/
 });
