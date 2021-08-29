@@ -18,10 +18,8 @@ class Users extends Component
     use PasswordValidationRules;
     use WithPagination;
     public $name, $email, $password, $role_id, $active, $password_confirmation;
-
     public $selectedRoles = [];
     public $roles_id;
-
     public $action,$search,$confirming;
 
     protected $listeners = ['updateTable' => 'render',
@@ -106,9 +104,13 @@ class Users extends Component
     }
     public function deleteSelected()
     {
+
         \App\Models\User::query()
             ->whereIn('id', $this->selectedRoles)
             ->delete();
+
+
+
         $this->selectedRoles = [];
         $this->emit('updateTable');
     }
@@ -128,7 +130,18 @@ class Users extends Component
 
     public function deleteSingleRole($id): void
     {
+        $user = \App\Models\User::where('id', $id)->first();
+
         \App\Models\User::where('id', $id)->delete();
+
+        $usersRole = DB::table('model_has_roles')
+                        ->where('model_id', $id)
+                        ->get();
+
+        foreach ($usersRole as $role)
+        {
+            $user->removeRole($role->role_id);
+        }
         $this->emit('updateTable');
     }
 }
